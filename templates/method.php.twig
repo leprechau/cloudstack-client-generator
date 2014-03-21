@@ -12,7 +12,7 @@
     * {{ method.description | raw }}
     *
 {% for param in method.params %}
-    * {% filter wordwrap(80, "\n    *        ", false) %}@param string ${% if camelCase %}{{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %} {{ param.description }}
+    * {% filter wordwrapStd(80, "\n    *        ", false) %}@param string ${% if camelCase %}{{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %} {{ param.description }}
 {% endfilter %}
 {% endfor %}
     */

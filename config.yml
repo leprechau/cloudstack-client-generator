@@ -1,11 +1,12 @@
 # URL of the API reference table of contents
 # check out if you have the latest version url here:
-# http://cloud.mindtouch.us/CloudStack_Documentation/API_Reference%3A_CloudStack
-#api_ref_toc_url: http://download.cloud.com/releases/3.0.0/api_3.0.0/TOC_Root_Admin.html 
-#api_ref_toc_url: http://download.cloud.com/releases/3.0.0/api_3.0.0/TOC_Domain_Admin.html 
-api_ref_toc_url: http://download.cloud.com/releases/3.0.0/api_3.0.0/TOC_User.html 
+# https://cloudstack.apache.org/docs/api/
+#
+#api_ref_toc_url: http://cloudstack.apache.org/docs/api/apidocs-4.3/TOC_Root_Admin.html
+#api_ref_toc_url: http://cloudstack.apache.org/docs/api/apidocs-4.3/TOC_Domain_Admin.html
+api_ref_toc_url: http://cloudstack.apache.org/docs/api/apidocs-4.3/TOC_User.html
 
-#api type (domain_admin, root_admin or user)
+#api type (root_admin, domain_admin or user)
 #apilevel: root_admin
 #apilevel: domain_admin
 apilevel: user
@@ -22,49 +23,81 @@ use_camel_case: true
 # Camel case values
 camel_case:
   accept: accept
+  accesskey: accessKey
   account: account
   accountdetails: accountDetails
   accountid: accountId
   accounts: accounts
   accounttype: accountType
+  aclid: aclId
   acltype: aclType
+  action: action
   activeonly: activeOnly
+  affinitygroupid: affinityGroupId
+  affinitygroupids: affinityGroupIds
+  affinitygroupnames: affinityGroupNames
   aggregatename: aggregateName
   algorithm: algorithm
   allocatedonly: allocatedOnly
   allocationstate: allocationState
   applied: applied
   associatednetworkid: associatedNetworkId
+  autoscaleuserid: autoScaleUserId
   availability: availability
   available: available
   binddn: bindDN
   bindpass: bindPass
   bits: bits
+  bladeid: bladeId
   bootable: bootable
   broadcastdomainrange: broadcastDomainRange
+  bucket: bucket
+  bytesreadrate: bytesReadRate
+  byteswriterate: bytesWriteRate
+  canusefordeploy: canUseForDeploy
+  capacitybytes: capacityBytes
+  capacityiops: capacityIops
   category: category
+  certchain: certChain
+  certid: certId
   certificate: certificate
   changecidr: changeCidr
   checksum: checksum
+  cidr: cidr
   cidrlist: cidrList
   cleanup: cleanup
   clusterid: clusterId
   clustername: clusterName
   clustertype: clusterType
+  conditionid: conditionId
+  conditionids: conditionIds
+  connectiontimeout: connectionTimeout
   conservemode: conserveMode
+  counterid: counterId
+  counterparam: counterParam
   cpunumber: cpuNumber
   cpuspeed: cpuSpeed
+  customer: customer
   customized: customized
+  customizediops: customizedIops
+  deleteprofile: deleteProfile
+  deploymentplanner: deploymentPlanner
   description: description
   destinationphysicalnetworkid: destinationPhysicalNetworkId
+  destroyvmgraceperiod: destroyVmGracePeriod
   destzoneid: destzoneId
   details: details
   deviceid: deviceId
   dhcpprovider: dhcpProvider
+  dhcpservertype: dhcpServerType
   diskofferingid: diskOfferingId
   disksize: diskSize
   displayname: displayName
+  displaynetwork: displayNetwork
+  displayoffering: displayOffering
   displaytext: displayText
+  displayvm: displayVm
+  displayvolume: displayVolume
   dns1: dns1
   dns2: dns2
   dnssearchorder: dnsSearchOrder
@@ -72,66 +105,120 @@ camel_case:
   domainId: domainId
   domainid: domainId
   domainsuffix: domainSuffix
+  dpd: dpd
   duration: duration
+  egressdefaultpolicy: egressDefaultPolicy
   email: email
   enabled: enabled
   enddate: endDate
   endip: endIp
+  endipv6: endIpv6
+  endpoint: endPoint
   endport: endPort
   entrytime: entryTime
+  esplifetime: espLifetime
+  esppolicy: espPolicy
+  excludezones: excludeZones
+  expunge: expunge
   fetchlatest: fetchLatest
   fingerprint: fingerprint
   firstname: firstName
   forced: forced
   forcedestroylocalstorage: forceDestroyLocalStorage
+  fordisplay: forDisplay
   forloadbalancing: forLoadBalancing
   format: format
   forvirtualnetwork: forVirtualNetwork
+  forvpc: forVpc
   fwdevicecapacity: fwDeviceCapacity
   fwdeviceid: fwDeviceId
   gateway: gateway
+  gatewayid: gatewayId
   group: group
   groupid: groupId
+  gslbdomainname: gslbDomainName
+  gslblbmethod: gslblbMethod
+  gslblbruleweightsmap: gslbLbRuleWeightsMap
+  gslbprovider: gslbProvider
+  gslbproviderprivateip: gslbProviderPrivateIp
+  gslbproviderpublicip: gslbProviderPublicIp
+  gslbservicetype: gslbServiceType
+  gslbstickysessionmethodname: gslbStickySessionMethodName
   guestcidraddress: guestCidrAddress
   guestiptype: guestIpType
+  guestvlanrange: guestVlanRange
+  guestvmcidr: guestVmCidr
+  guestvswitchname: guestVswitchName
+  guestvswitchtype: guestVswitchType
   haenable: haEnable
+  hahost: haHost
+  healthythreshold: healthyThreshold
   hostid: hostId
   hostname: hostname
   hosttags: hosttags
   hypervisor: hypervisor
+  hypervisorsnapshotreserve: hypervisorSnapshotReserve
+  hypervnetworklabel: hypervNetworkLabel
   icmpcode: icmpCode
   icmptype: icmpType
   id: id
   ids: ids
+  ikelifetime: ikeLifetime
+  ikepolicy: ikePolicy
+  imagestoreuuid: imageStoreUuid
+  includezones: includeZones
   inline: inline
+  insideportprofile: insidePortProfile
+  instanceport: instancePort
   internaldns1: internalDns1
   internaldns2: internalDns2
+  interval: interval
+  intervaltime: intervalTime
   intervaltype: intervalType
+  iopsreadrate: iopsReadRate
+  iopswriterate: iopsWriteRate
+  ip6address: ip6Address
+  ip6cidr: ip6Cidr
+  ip6dns1: ip6Dns1
+  ip6dns2: ip6Dns2
+  ip6gateway: ip6Gateway
   ipaddress: ipAddress
   ipaddressid: ipAddressId
   iprange: ipRange
+  ipsecpsk: ipsecPsk
   iptonetworklist: ipToNetWorkList
   iqn: iqn
   iscleanuprequired: isCleanUpRequired
   isdefault: isDefault
+  isdynamicallyscalable: isDynamicallyScalable
+  isexclusivegslbprovider: isExclusiveGslbProvider
   isextractable: isExtractable
   isfeatured: isFeatured
   isofilter: isoFilter
+  isoid: isoId
+  isolatedpvlan: isolatedPvlan
+  isolationmethod: isolationMethod
   isolationmethods: isolationMethods
+  ispersistent: isPersistent
+  isportable: isPortable
   ispublic: isPublic
   isready: isReady
   isrecursive: isRecursive
+  isrouting: isRouting
   isshared: isShared
   issourcenat: isSourceNat
   isstaticnat: isStaticNat
   issystem: isSystem
   istagged: isTagged
+  isvolatile: isVolatile
   jobid: jobId
+  keepaliveenabled: keepAliveEnabled
   key: key
   keyboard: keyboard
   keypair: keyPair
   keyword: keyword
   kvmnetworklabel: kvmNetworkLabel
+  l3gatewayserviceuuid: l3GatewayServiceUuid
   lastname: lastname
   lbdevicecapacity: lbDeviceCapacity
   lbdevicededicated: lbDeviceDedicated
@@ -140,13 +227,25 @@ camel_case:
   level: level
   limitcpuuse: limitCpuUse
   listall: listAll
+  listtype: listType
+  livemigrate: liveMigrate
+  loadbalancerrulelist: loadBalancerRuleList
+  localstorageenabled: localStorageEnabled
   lock: lock
+  managed: managed
   managedstate: managedState
   max: max
+  maxconnections: maxConnections
+  maxerrorretry: maxErrorRetry
   maxguestslimit: maxGuestsLimit
+  maxiops: maxIops
+  maxmembers: maxMembers
   maxsnaps: maxSnaps
   memory: memory
   methodname: methodName
+  migrateto: migrateTo
+  miniops: minIops
+  minmembers: minMembers
   mode: mode
   name: name
   netmask: netmask
@@ -160,41 +259,75 @@ camel_case:
   networkspeed: networkSpeed
   networktype: networkType
   newname: newName
+  nicid: nicId
   nspid: nspId
+  number: number
+  nvpdeviceid: nvpDeviceId
   offerha: offerHa
   op: op
   openfirewall: openFirewall
   oscategoryid: osCategoryId
   ostypeid: osTypeId
+  otherdeployparams: otherDeployParams
   page: page
   pagesize: pageSize
   param: param
   parentdomainid: parentDomainId
+  passive: passive
   password: password
   passwordenabled: passwordEnabled
   path: path
   physicalnetworkid: physicalNetworkId
+  pingcifspassword: pingCifsPassword
+  pingcifsusername: pingCifsUsername
+  pingdir: pingDir
+  pingpath: pingPath
+  pingstorageserverip: pingStorageServerIp
   podid: podId
+  podids: podIds
   policyid: policyId
   poolname: poolName
   port: port
+  privateendport: privateEndPort
+  privateip: privateIp
   privatekey: privateKey
   privateport: privatePort
+  profiledn: profileDn
+  profilename: profileName
   projectid: projectId
   projectids: projectids
   protocol: protocol
   provider: provider
+  providertype: providerType
+  publicendport: publicEndPort
   publicipid: publicIpId
   publickey: publicKey
   publicport: publicPort
+  publicvswitchname: publicVswitchName
+  publicvswitchtype: publicVswitchType
+  pxeservertype: pxeServerType
   queryfilter: queryFilter
+  quiescevm: quiesceVm
+  quiettime: quietTime
+  regionid: regionId
+  relationaloperator: relationalOperator
   requireshvm: requireShvm
+  resourceid: resourceId
+  resourceids: resourceIds
   resourcestate: resourcestate
   resourcetype: resourceType
+  responsetimeout: responseTimeout
   restartrequired: restartRequired
   role: role
+  s2scustomergatewayid: s2sCustomerGatewayId
+  s2svpngatewayid: s2sVpnGatewayId
+  scaledownpolicyids: scaleDownPolicyIds
+  scaleuppolicyids: scaleUpPolicyIds
   schedule: schedule
+  scheme: scheme
+  scope: scope
   searchbase: searchBase
+  secretkey: secretKey
   securitygroupenabled: securityGroupEnabled
   securitygroupid: securityGroupId
   securitygroupids: securityGroupIds
@@ -203,25 +336,37 @@ camel_case:
   service: service
   servicecapabilitylist: serviceCapabilityList
   servicelist: serviceList
+  serviceofferingdetails: serviceOfferingDetails
   serviceofferingid: serviceOfferingId
   serviceproviderlist: serviceProviderList
   showcapacities: showCapacities
+  showremoved: showRemoved
+  shrinkok: shrinkOk
   size: size
   snapshotid: snapshotId
+  snapshotmemory: snapshotMemory
   snapshotpolicy: snapshotPolicy
   snapshotreservation: snapshotReservation
   snapshottype: snapshotType
+  sockettimeout: socketTimeout
   sortby: sortBy
   sortkey: sortKey
+  source: source
+  sourceipaddress: sourceIpAddress
+  sourceipaddressnetworkid: sourceIpAddressNetworkId
   sourcenatsupported: sourceNatSupported
+  sourceport: sourcePort
   sourcezoneid: sourceZoneId
   specifyipranges: specifyIpRanges
   specifyvlan: specifyVlan
   sshkeyenabled: sshkeyEnabled
   ssl: ssl
+  start: start
   startdate: startDate
   startip: startIp
+  startipv6: startIpv6
   startport: startPort
+  startvm: startVm
   state: state
   storageid: storageId
   storagetype: storageType
@@ -229,16 +374,24 @@ camel_case:
   supportedservices: supportedServices
   systemvmtype: systemVmType
   tags: tags
+  templatedn: templateDn
   templatefilter: templateFilter
   templateid: templateId
   templatetag: templateTag
+  tenantuuid: tenantUuid
+  tftpdir: tftpDir
+  threshold: threshold
   timezone: timezone
   token: token
   traffictype: trafficType
+  transportzoneuuid: transportZoneUuid
   truststore: trustStore
   truststorepass: trustStorePass
   type: type
+  ucsmanagerid: ucsManagerId
+  unhealthythreshold: unhealthyThreshold
   url: url
+  usehttps: useHttps
   userapikey: userApiKey
   userdata: userData
   userid: userId
@@ -246,12 +399,25 @@ camel_case:
   usersecretkey: userSecretKey
   usersecuritygrouplist: userSecurityGroupList
   value: value
+  vcenter: vCenter
+  version: version
   virtualmachineid: virtualMachineId
   virtualmachineids: virtualMachineIds
   vlan: vlan
   vlanid: vlanId
+  vlanrange: vlanRange
+  vmgroupid: vmGroupId
+  vmguestip: vmGuestIp
+  vmprofileid: vmProfileId
+  vmsnapshotid: vmSnapshotId
   vmwarenetworklabel: vmwareNetworkLabel
+  vnsdeviceid: vnsDeviceId
   volumeid: volumeId
   volumename: volumeName
+  vpcid: vpcId
+  vpcofferingid: vpcOfferingId
+  vsmipaddress: vsmIpAddress
+  vsmpassword: vsmPassword
+  vsmusername: vsmUsername
   xennetworklabel: xenNetworkLabel
   zoneid: zoneId

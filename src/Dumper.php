@@ -5,7 +5,7 @@ class Dumper
     protected $lib;
     protected $config;
     protected $extension;
-    
+
     function __construct($lib, $config)
     {
         $this->lib = $lib;
@@ -18,13 +18,13 @@ class Dumper
             throw new Exception("Language " . $config['language'] . " not supported.");
         }
     }
-    
+
     public function dumpMethodData($method)
     {
         $methodData = $this->fetchMethodData($this->config['apilevel']."/${method}.html");
         print_r($methodData);
     }
-    
+
     public function dumpMethod($method)
     {
         $methodData = $this->fetchMethodData($this->config['apilevel']."/${method}.html");
@@ -33,7 +33,7 @@ class Dumper
             "config" => $this->config,
         ));
     }
-    
+
     public function dumpLinks()
     {
         $links = Parser::getAllLinks($this->fetchTOC());
@@ -41,7 +41,7 @@ class Dumper
             echo $link['url'] . " - " . $link['name'] ."\n";
         }
     }
-    
+
     public function dumpClass()
     {
         $links = Parser::getAllLinks($this->fetchTOC());
@@ -57,7 +57,7 @@ class Dumper
             "config" => $this->config,
         ));
     }
-    
+
     public function checkCamelCase()
     {
         // Disable camel case auto lookup
@@ -70,7 +70,10 @@ class Dumper
         foreach ($links as $link) {
             echo "Fetching " . $link['url'] . " ...\n";
             $methodData = $this->fetchMethodData($link['url']);
-            
+
+            // skip methods without defined paramaters
+            if (!isset($methodData['params'])) continue;
+
             foreach ($methodData['params'] as $param) {
                 if (!array_key_exists($param['name'], $this->config['camel_case'])) {
                     $missingNames[] = $param['name'];
@@ -81,8 +84,13 @@ class Dumper
         if (empty($missingNames)) {
             echo "No missing camel case values :)\n";
         } else {
-            echo "Add the following values to the config file under \"camel_case\"\n :";
-            print_r($missingNames);
+            $unique = array_unique($missingNames);
+            asort($unique);
+            echo "Please edit and add the following values to the config file under \"camel_case:\"\n";
+            foreach ($unique as $name) {
+                echo "  ${name}: ${name}\n";
+            }
+            echo "\n";
         }
     }
     
@@ -91,13 +99,13 @@ class Dumper
         $html = $this->lib->fetchHtml($url);
         return Parser::getMethodData($html, $this->config['use_camel_case'], $this->config['camel_case']);
     }
-    
+
     private function fetchTOC() {
         // Download the API reference table of content 
         $url = $this->config['api_ref_toc_url'];
         return $this->lib->fetchHtml($url);
     }
-    
+
     /**
      * Match the root of the table of content
      * for http://download.cloud.com/releases/2.2.0/api_2.2.4/TOC_User.html
