@@ -13,11 +13,9 @@
         '''
         {{ method.description | raw }}
         '''
-
         return self.request("{{ method.name }}", {
 {% for param in method.params %}
             '{{ param.name }}' : {% if camelCase %}{{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %},
 {% endfor %}
         })
 {% endautoescape %}
-    

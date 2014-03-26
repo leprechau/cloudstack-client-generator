@@ -8,24 +8,32 @@
 #}
 {% autoescape false %}
 {% set camelCase = config.use_camel_case %}
+{% set paramCount = method.params | length %}
     /**
-    * {{ method.description | raw }}
-    *
+     * {% filter wordwrapStd(80, "\n     * ", true) %}{{ method.description | raw }}{{ "\n" }}{% endfilter %}
+     *
 {% for param in method.params %}
-    * {% filter wordwrapStd(80, "\n    *        ", false) %}@param string ${% if camelCase %}{{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %} {{ param.description }}
-{% endfilter %}
+     * @param string ${% if camelCase %}{{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %} {% filter wordwrapStd(80, "\n     * ", true) %}{{ param.description | raw }}{{ "\n" }}{% endfilter %}
 {% endfor %}
-    */
-    
-    public function {{ method.name }}({% for param in method.params %}${% if camelCase %}{{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %}{% if param.required != "true" %} = ""{% endif %}{% if not loop.last %}, {% endif %}
+     */
+{% if paramCount > 5 %}
+    public function {{ method.name }}(
+{% for param in method.params %}
+        {% if camelCase %}${{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %}{% if param.required != "true" %} = ""{% endif %}{% if not loop.last %},{{ "\n" }}{% else %}{{ "\n" }}{% endif %}
+{% endfor %}
+    ) {
+{% else %}
+    public function {{ method.name }}({% for param in method.params %}
+{% if camelCase %}${{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %}{% if param.required != "true" %} = ""{% endif %}{% if not loop.last %}, {% endif %}
 {% endfor %}) {
-
-{% for param in method.params %}{% if param.required == "true" %}
+{% endif %}
+{% for param in method.params %}
+{% if param.required == "true" %}
         if (empty(${% if camelCase %}{{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %})) {
             throw new CloudStackClientException(sprintf(MISSING_ARGUMENT_MSG, "{% if camelCase %}{{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %}"), MISSING_ARGUMENT);
         }
-
-{% endif %}{% endfor %}
+{% endif %}
+{% endfor %}
         return $this->request("{{ method.name }}", array(
 {% for param in method.params %}
             '{{ param.name }}' => ${% if camelCase %}{{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %},
@@ -33,4 +41,3 @@
         ));
     }
 {% endautoescape %}
-    

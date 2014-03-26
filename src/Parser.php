@@ -22,7 +22,7 @@ class Parser
 
             $links[] = array(
                 'url' => $url,
-                'name' => trim($a->plaintext),
+                'name' => trim(html_entity_decode($a->plaintext)),
             );
         }
 
@@ -41,9 +41,9 @@ class Parser
             die("Error getting $url");
         }
         $data = array(
-            'name' => trim($title->plaintext),
+            'name' => trim(html_entity_decode($title->plaintext)),
             // The description of the method is in the next block
-            'description' => trim($title->next_sibling()->plaintext),
+            'description' => trim(html_entity_decode($title->next_sibling()->plaintext)),
         );
 
         // The arguments of the method are all in the first table
@@ -57,8 +57,8 @@ class Parser
                 $data['params'][] = array(
                     "name" => $name,
                     "nameCamelCase" => $useCamelCase ? self::getCamelCase($name, $camelCaseValues) : "",
-                    "description" => trim($tr->find('td', 1)->plaintext),
-                    "required" => trim($tr->find('td', 2)->plaintext),
+                    "description" => trim(html_entity_decode($tr->find('td', 1)->plaintext)),
+                    "required" => trim(html_entity_decode($tr->find('td', 2)->plaintext)),
                 );
             }
         }
