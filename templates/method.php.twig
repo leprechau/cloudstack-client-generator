@@ -8,25 +8,39 @@
 #}
 {% autoescape false %}
 {% set camelCase = config.use_camel_case %}
-{% set paramCount = method.params | length %}
     /**
      * {% filter wordwrapStd(80, "\n     * ", true) %}{{ method.description | raw }}{{ "\n" }}{% endfilter %}
      *
+{# document all required paramaters #}
 {% for param in method.params %}
+{% if param.required == "true" %}
      * @param string ${% if camelCase %}{{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %} {% filter wordwrapStd(80, "\n     * ", true) %}{{ param.description | raw }}{{ "\n" }}{% endfilter %}
-{% endfor %}
-     */
-{% if paramCount > 5 %}
-    public function {{ method.name }}(
-{% for param in method.params %}
-        {% if camelCase %}${{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %}{% if param.required != "true" %} = ""{% endif %}{% if not loop.last %},{{ "\n" }}{% else %}{{ "\n" }}{% endif %}
-{% endfor %}
-    ) {
-{% else %}
-    public function {{ method.name }}({% for param in method.params %}
-{% if camelCase %}${{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %}{% if param.required != "true" %} = ""{% endif %}{% if not loop.last %}, {% endif %}
-{% endfor %}) {
 {% endif %}
+{% endfor %}
+{# end required paramaters #}
+{% if method.optional > 0 %}
+     * @param array  $optArgs {
+{# document all optional paramaters #}
+{% for param in method.params %}
+{% if param.required == "false" %}
+     *     @type string ${% if camelCase %}{{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %} {% filter wordwrapStd(80, "\n     *     ", true) %}{{ param.description | raw }}{{ "\n" }}{% endfilter %}
+{% endif %}
+{% endfor %}
+{# end optional arguments #}
+     * }
+{% endif %}
+     */
+    public function {{ method.name }}({# only define required paramaters in function #}
+{% set count = 1 %}
+{% for param in method.params %}
+{% if param.required == "true" %}
+{% if camelCase %}${{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %}{% if count < method.required %}{{ ", " }}{% endif %}{% endif %}
+{% set count = count + 1 %}
+{% endfor %}
+{# end required #}
+{# append optional arguments if needed #}
+{% if method.optional > 0 %}{% if method.required > 0 %}, {% endif %}array $optArgs = array(){% endif %}) {
+{# generate required paramager checks #}
 {% for param in method.params %}
 {% if param.required == "true" %}
         if (empty(${% if camelCase %}{{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %})) {
@@ -34,10 +48,36 @@
         }
 {% endif %}
 {% endfor %}
-        return $this->request("{{ method.name }}", array(
+{# end paramater checks #}
+        return $this->request("{{ method.name }}",
+{% if (method.optional > 0) and (method.required > 0) %}
+{# generate return array merge of required and optional paramaters #}
+            array_merge(array(
+{% elseif method.required > 0 %}
+{# no merge ... just a simple array #}
+            array(
+{% else %}
+{# no merge ... no array ... only optional arguments here #}
+            $optArgs
+{% endif %}
+{% set count = 1 %}
 {% for param in method.params %}
-            '{{ param.name }}' => ${% if camelCase %}{{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %},
+{% if param.required == "true" %}
+                '{{ param.name }}' => ${% if camelCase %}{{ param.nameCamelCase }}{% else %}{{ param.name }}{% endif %}
+{# determine line ending based on count #}
+{% if count < method.required %}{{ ",\n" }}{% else %}{{ "\n" }}{% endif %}
+{% set count = count + 1 %}
+{% endif %}
 {% endfor %}
-        ));
+{% if (method.optional > 0) and (method.required > 0) %}
+{# generate return array merge of required and optional paramaters #}
+            ), $optArgs)
+{% elseif method.required > 0 %}
+{# no merge ... just close array #}
+            )
+{% else %}
+{# nothing here #}
+{% endif %}
+        );
     }
 {% endautoescape %}

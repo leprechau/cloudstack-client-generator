@@ -44,6 +44,9 @@ class Parser
             'name' => trim(html_entity_decode($title->plaintext)),
             // The description of the method is in the next block
             'description' => trim(html_entity_decode($title->next_sibling()->plaintext)),
+            // paramater counts
+            'required' => 0,
+            'optional' => 0
         );
 
         // The arguments of the method are all in the first table
@@ -54,11 +57,19 @@ class Parser
         foreach($params_table->find('tr') as $tr) {
             $name = trim($tr->find('td', 0)->plaintext);
             if ($name != "Parameter Name") {
+                $required = trim(html_entity_decode($tr->find('td', 2)->plaintext));
+                // increase counts
+                if ($required === "true") {
+                    $data['required']++;
+                } else {
+                    $data['optional']++;
+                }
+                // build paramater data
                 $data['params'][] = array(
                     "name" => $name,
                     "nameCamelCase" => $useCamelCase ? self::getCamelCase($name, $camelCaseValues) : "",
                     "description" => trim(html_entity_decode($tr->find('td', 1)->plaintext)),
-                    "required" => trim(html_entity_decode($tr->find('td', 2)->plaintext)),
+                    "required" => $required,
                 );
             }
         }
