@@ -3,36 +3,49 @@ CloudStack Client Generator
 
 Command line tool that fetches and parses the online reference for CloudStack API and generates the client class in PHP or Python with in-code documentation. You can generate a client in any other language (Java, C++, ObjectiveC, etc.) by adding class templates to the ``templates/`` directory.
 
-See https://github.com/qpleple/cloudstack-php-client for last PHP client generated.
+See https://github.com/leprechau/cloudstack-php-client for last PHP client generated.
 
 Description
 -----------
 
 The table of content of the API reference lists all the methods. Each method has its own page. The data that the script fetches for each method is:
 
-* the method name
-* the method description
-* for each argument:
-  * the argument name
-  * the argument description
-  * wether if the argument is required or not
-  
-Here is an example of a method generated that has one argument required (`$id`) and one not (`$forced`):
+* for each method:
+    * the method name
+    * the method description
+    * the required and optional argument counts
 
+    * for each argument:
+        * the argument name
+        * the argument description
+        * wether if the argument is required or not
+
+Required arguments are enumerated in the function definition and all optional arguments should be passed as an associative array.
+
+Here is an example of a method generated that has one required (`$id`) and one optional (`$forced`) argument:
+
+```php
     /**
-    * Stops a virtual machine.
-    *
-    * @param string $id The ID of the virtual machine
-    * @param string $forced Force stop the VM.  The caller knows the VM is stopped.
-    */
-    
-    public function stopVirtualMachine($id, $forced = "") {
-        $this->request("stopVirtualMachine", array(
-            'id' => $id,
-            'forced' => $forced,
-        ));
+     * Stops a virtual machine.
+     *
+     * @param string $id The ID of the virtual machine
+     * @param array  $optArgs {
+     *     @type string $forced Force stop the VM (vm is marked as Stopped even when command fails to be send to
+     *     the backend).  The caller knows the VM is stopped.
+     * }
+     */
+    public function stopVirtualMachine($id, array $optArgs = array()) {
+        if (empty($id)) {
+            throw new CloudStackClientException(sprintf(MISSING_ARGUMENT_MSG, "id"), MISSING_ARGUMENT);
+        }
+        return $this->request("stopVirtualMachine",
+            array_merge(array(
+                'id' => $id
+            ), $optArgs)
+        );
     }
-    
+```
+
 Usage
 -----
 Just run the script, it will generate all the methods.
@@ -41,25 +54,38 @@ Just run the script, it will generate all the methods.
 
 Output:
 
-    abstract class BaseCloudStackClient {
-        abstract protected function request($method, $args);
-    
-        /**
-        * Stops a virtual machine.
-        *
-        * @param string $id The ID of the virtual machine
-        * @param string $forced Force stop the VM.  The caller knows the VM is stopped.
-        */
-        
-        public function stopVirtualMachine($id, $forced = "") {
-            $this->request("stopVirtualMachine", array(
-                'id' => $id,
-                'forced' => $forced,
-            ));
-        }
-    
+```php
+    /**
+     * CloudStackClient class extension of BaseCloudStackClient class
+     */
+    class CloudStackClient extends BaseCloudStackClient {
+```
         ...
+``` php
+        /**
+         * Stops a virtual machine.
+         *
+         * @param string $id The ID of the virtual machine
+         * @param array  $optArgs {
+         *     @type string $forced Force stop the VM (vm is marked as Stopped even when command fails to be send to
+         *     the backend).  The caller knows the VM is stopped.
+         * }
+         */
+        public function stopVirtualMachine($id, array $optArgs = array()) {
+            if (empty($id)) {
+                throw new CloudStackClientException(sprintf(MISSING_ARGUMENT_MSG, "id"), MISSING_ARGUMENT);
+            }
+            return $this->request("stopVirtualMachine",
+                array_merge(array(
+                    'id' => $id
+                ), $optArgs)
+            );
+        }
+```
+        ...
+```php
     }
+```
 
 Configuration
 -------------
@@ -128,24 +154,28 @@ Example:
     (
         [name] => stopVirtualMachine
         [description] => Stops a virtual machine.
+        [required] => 1
+        [optional] => 1
         [params] => Array
             (
                 [0] => Array
                     (
                         [name] => id
+                        [nameCamelCase] => id
                         [description] => The ID of the virtual machine
                         [required] => true
                     )
-    
+
                 [1] => Array
                     (
                         [name] => forced
-                        [description] => Force stop the VM.  The caller knows the VM is stopped.
+                        [nameCamelCase] => forced
+                        [description] => Force stop the VM (vm is marked as Stopped even when command fails to be send to the backend).  The caller knows the VM is stopped.
                         [required] => false
                     )
-    
+
             )
-    
+
     )
 
 ### Method ###
