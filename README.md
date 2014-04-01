@@ -91,26 +91,37 @@ Configuration
 
 The configuration is set in `config.yml` with the Yaml format:
 
-    # URL of the API reference table of contents
-    # check out if you have the latest version url here:
-    # http://cloud.mindtouch.us/CloudStack_Documentation/API_Reference%3A_CloudStack
-    api_ref_toc_url: http://download.cloud.com/releases/2.2.0/api_2.2.4/TOC_User.html
+```yml
+# URL of the API reference table of contents
+# check out if you have the latest version url here:
+# https://cloudstack.apache.org/docs/api/
+#
+#api_ref_toc_url: http://cloudstack.apache.org/docs/api/apidocs-4.3/TOC_Root_Admin.html
+#api_ref_toc_url: http://cloudstack.apache.org/docs/api/apidocs-4.3/TOC_Domain_Admin.html
+api_ref_toc_url: http://cloudstack.apache.org/docs/api/apidocs-4.3/TOC_User.html
 
-    # Language for generated code (supported: php, python)
-    language: php
+#api type (root_admin, domain_admin or user)
+#apilevel: root_admin
+#apilevel: domain_admin
+apilevel: user
 
-    # Generated class name
-    class_name: CloudStackClient
+# Language for generated code (supported: php, python)
+language: php
 
-    # Use camel case variable or not
-    use_camel_case: true
+# Generated class name
+class_name: CloudStackClient
 
-    # Camel case values
-    camel_case:
-        account: account
-        accounts: accounts
-        # ...
-        
+# Use camel case variable or not
+use_camel_case: true
+
+# Camel case values
+camel_case:
+  accept: accept
+  accesskey: accessKey
+  account: account
+  ...
+```
+
 Camel Case
 ----------
 You can either choose to have generated code with the same variable names than in the documentation, `securitygroupnames` for instance, or to have them in camel case, like `securityGroupNames` by setting `use_camel_case` to `true` in the configuration file.
