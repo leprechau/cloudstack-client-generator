@@ -14,7 +14,6 @@ The table of content of the API reference lists all the methods. Each method has
     * the method name
     * the method description
     * the required and optional argument counts
-
     * for each argument:
         * the argument name
         * the argument description
