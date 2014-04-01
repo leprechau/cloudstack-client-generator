@@ -5,6 +5,8 @@ Command line tool that fetches and parses the online reference for CloudStack AP
 
 See https://github.com/leprechau/cloudstack-php-client for last PHP client generated.
 
+Many thanks to the parent fork of this project for making the path to a 4.3+ compliant PHP API much simpler.
+
 Description
 -----------
 
